@@ -4,48 +4,82 @@ import com.hania.stats.process.model.StudentsAnswers;
 import com.hania.stats.process.model.Template;
 import com.thoughtworks.xstream.XStream;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 public class DataConverterImpl implements DataConverter {
 
+    /**
+     * Histogram's facade.
+     */
+    private final Histograms histograms;
+
+    /**
+     * Template containing test scheme (questions and correct answers).
+     */
     private Template template;
 
+    /**
+     * The set of student's scores (along with their names).
+     */
+    private Set<StudentsScore> students;
+
+    public DataConverterImpl() {
+        histograms = new Histograms();
+    }
+
+    /**
+     * @see DataConverter#loadData(Path, Path)
+     */
     @Override
-    public void loadData(Path templatePath, Path answersPath) {
+    public void loadData(Path templatePath, Path answersPath) throws IOException {
         XStream xStream = new TemplateXStream();
-        try {
-            template = (Template) xStream.fromXML(new FileInputStream(String.valueOf(templatePath)));
-            students = StudentsAnswersProvider.loadStudentsAnswers(answersPath, template);
-        } catch (FileNotFoundException e) {
-            throw new UncheckedIOException(e);
-        }
+        template = (Template) xStream.fromXML(new FileInputStream(String.valueOf(templatePath)));
+        students = StudentsAnswersProvider.loadStudentsAnswers(answersPath, template).stream()
+                .map(StudentsScore::new)
+                .collect(Collectors.toSet());
     }
 
+    /**
+     * @see DataConverter#createScoreHistogram()
+     */
     @Override
-    public Map<Integer, Integer> createScoreHistogram() {
-        return null;
+    public List<Integer> createScoreHistogram() {
+        return histograms.createScoreHistogram(template.getQuestions(), students);
     }
 
+    /**
+     * @see DataConverter#createMarkHistogram()
+     */
     @Override
-    public Map<Integer, Integer> createMarkHistogram() {
-        return null;
+    public Map<String, Long> createMarkHistogram() {
+        return histograms.createMarkHistogram(template.getQuestions(), students);
     }
 
+    /**
+     * @see DataConverter#createQuestionHistogram()
+     */
     @Override
-    public Map<Integer, Integer> createExerciseHistogram() {
-        return null;
+    public Map<Integer, Integer> createQuestionHistogram() {
+        return histograms.createQuestionHistogram(template.getQuestions(), getStudentsAnswers());
     }
 
-    Template getTemplate() {    // todo usunac
+    // todo up
+    Template getTemplate() {
         return template;
     }
 
-    Set<StudentsAnswers> getStudents() {   // todo up
-        return students;
+    Set<StudentsAnswers> getStudentsAnswers() {
+        return students.stream()
+                .map(StudentsScore::getStudent)
+                .collect(Collectors.toSet());
     }
 }

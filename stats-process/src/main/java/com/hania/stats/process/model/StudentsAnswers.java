@@ -1,6 +1,7 @@
 package com.hania.stats.process.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -8,11 +9,17 @@ import java.util.Objects;
  */
 public class StudentsAnswers {
 
+    /**
+     * Student's name. May be full name with the index.
+     */
     private final String name;
 
-    private final List<List<Boolean>> answers;
+    /**
+     * The map associating question's number with the list of student's answers.
+     */
+    private final Map<Integer, List<Boolean>> answers;
 
-    public StudentsAnswers(String name, List<List<Boolean>> answers) {
+    public StudentsAnswers(String name, Map<Integer, List<Boolean>> answers) {
         this.name = name;
         this.answers = answers;
     }
@@ -21,7 +28,7 @@ public class StudentsAnswers {
         return name;
     }
 
-    public List<List<Boolean>> getAnswers() {
+    public Map<Integer, List<Boolean>> getAnswers() {
         return answers;
     }
 
@@ -36,7 +43,7 @@ public class StudentsAnswers {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name, answers);
     }
+
 }

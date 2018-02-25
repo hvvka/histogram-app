@@ -1,7 +1,5 @@
 package com.hania.stats.process;
 
-import com.hania.stats.process.model.Answer;
-import com.hania.stats.process.model.Exercise;
 import com.hania.stats.process.model.StudentsAnswers;
 import com.hania.stats.process.model.Template;
 import com.thoughtworks.xstream.XStream;
@@ -14,12 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,6 +22,10 @@ import static org.junit.Assert.assertEquals;
 public class DataConverterImplTest {
 
     private DataConverterImpl converter;
+    private static final String RESOURCES_PATH = "src/test/resources";
+    private static final Path SAMPLE_TEMPLATE_FILE_PATH = Paths.get(RESOURCES_PATH, "sample-template.xml");
+    private static final Path EXPECTED_TEMPLATE_FILE_PATH = Paths.get(RESOURCES_PATH, "expected-template.xml");
+    private static final Path ANSWERS_FILE_PATH = Paths.get(RESOURCES_PATH,"answers.csv");
 
     @Before
     public void init() {
@@ -36,29 +33,18 @@ public class DataConverterImplTest {
     }
 
     @Test
-    public void loadData() {
-        // given TODO ścieżki dać na psf na atrybuty
-        final String resourcesPath = "src/test/resources";
-        final Path sampleTemplateFile = Paths.get(resourcesPath, "sample-template.xml");
-        final Path expectedTemplateFile = Paths.get(resourcesPath, "expected-template.xml");
-        final Path answersFile = Paths.get(resourcesPath,"answers.csv");
-        Template templateBean = getTemplate();
-
-
+    public void loadData() throws IOException {
         // when
-        converter.loadData(sampleTemplateFile, answersFile);
+        converter.loadData(SAMPLE_TEMPLATE_FILE_PATH, ANSWERS_FILE_PATH);
 
         // then
-        Set<StudentsAnswers> expectedStudents = getStudentsAnswers();
-        assertEquals(expectedStudents, converter.getStudents());
+        Set<StudentsAnswers> expectedStudents = AnswersGenerator.sampleStudents();
+        assertEquals(expectedStudents, converter.getStudentsAnswers());
 
         // and
-        String expectedTemplate = getExpectedTemplate(expectedTemplateFile);
+        String expectedTemplate = getExpectedTemplate(EXPECTED_TEMPLATE_FILE_PATH);
         String actualTemplate = getActualTemplate(converter.getTemplate());
         assertEquals(expectedTemplate, actualTemplate);
-//        assertNotNull(expectedTemplateFile);
-//        assertThat(converter.getTemplate(), sameBeanAs(templateBean));
-//        Assert.assertEquals(converter.getTemplate(), templateBean);
     }
 
     private String getActualTemplate(Template template) {
@@ -66,62 +52,12 @@ public class DataConverterImplTest {
         return xStream.toXML(template);
     }
 
-    private String getExpectedTemplate(Path sampleTemplateFile) {
+    private String getExpectedTemplate(Path expectedTemplateFile) {
         try {
-            byte[] encoded = Files.readAllBytes(sampleTemplateFile.toAbsolutePath());
+            byte[] encoded = Files.readAllBytes(expectedTemplateFile.toAbsolutePath());
             return new String(encoded, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-    }
-
-//    private Template getExpectedTemplate(Path generatedTemplateFile) {
-//        try {
-//            XStream xStream = new TemplateXStream();
-//            Template templateBean = new Template();
-//            xStream.toXML(templateBean, new FileOutputStream(String.valueOf(generatedTemplateFile)));
-//            return templateBean;
-//        } catch (IOException e) {
-//            throw new UncheckedIOException(e);
-//        }
-//    }
-
-    private Template getTemplate() {
-        List<Exercise> questionList = new ArrayList<>();
-
-        final String question1 = "Semafory Dijkstry";
-        final String q1answer1 = "Sluza do synchronizacji procesow wspolbieznych";
-        final String q1answer2 = "Sa to flagi dwustanowe, na ktorych zdefiniowane sa nieprzerywalne operacje P i V";
-
-        final String question2 = "Algorytm przelaczania procesow w systemie Unix";
-        final String q2answer1 = "Jest algorytmem z wywlaszczeniem procesow systemowych i uzytkowych";
-        final String q2answer2 = "Jest algortmem priorytetowym, w którym priorytet jest wewnetrznie zmieniany w " +
-                "trakcie wykonywania procesu";
-
-        questionList.add(new Exercise(1, question1,
-                Arrays.asList(new Answer(q1answer1, true), new Answer(q1answer2, false))));
-        questionList.add(new Exercise(2, question2,
-                Arrays.asList(new Answer(q2answer1, false), new Answer(q2answer2, true))));
-
-        return new Template(questionList);
-    }
-
-    private Set<StudentsAnswers> getStudentsAnswers() {
-        return Stream.of(
-                new StudentsAnswers("Preston", Arrays.asList(Arrays.asList(true, false), Arrays.asList(false, true))),
-                new StudentsAnswers("Bober", Arrays.asList(Arrays.asList(false, false), Arrays.asList(true, true))))
-                .collect(Collectors.toSet());
-    }
-
-    @Test
-    public void createScoreHistogram() {
-    }
-
-    @Test
-    public void createMarkHistogram() {
-    }
-
-    @Test
-    public void createExerciseHistogram() {
     }
 }

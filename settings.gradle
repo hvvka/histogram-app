@@ -1,3 +1,5 @@
+rootProject.name = 'lab1'
+
 include 'stats-process'
 include 'stats-gui'
 

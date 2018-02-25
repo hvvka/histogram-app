@@ -5,8 +5,14 @@ package com.hania.stats.process.model;
  */
 public class Answer {
 
+    /**
+     * Answer's text content.
+     */
     private final String text;
 
+    /**
+     * Indicates if the answers is correct or not.
+     */
     private final boolean correct;
 
     public Answer() {
@@ -26,4 +32,5 @@ public class Answer {
     public boolean isCorrect() {
         return correct;
     }
+
 }

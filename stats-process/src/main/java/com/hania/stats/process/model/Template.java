@@ -1,5 +1,7 @@
 package com.hania.stats.process.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,21 +9,21 @@ import java.util.List;
  */
 public class Template {
 
-    private List<Exercise> questions;
+    /**
+     * The list of questions (with the answers) read from the template XML file.
+     */
+    private final List<Question> questions;
 
-    public Template(List<Exercise> questions) {
+    public Template() {
+        questions = new ArrayList<>(Collections.emptyList());
+    }
+
+    public Template(List<Question> questions) {
         this.questions = questions;
     }
 
-    public Template() {
-        super();
-    }
-
-    public List<Exercise> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
-}
 
-//1. czy da się sensownie serializować mapę?
-//2. stworzyć listę, która będzie zawierała obiekt, który będzie zawierał indeks; opakować
-//3.
+}
