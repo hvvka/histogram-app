@@ -1,0 +1,18 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+#IntelliJ configuration
+.idea/
+out/
+*.iml
+*.iws
+
+#Gradle
+build/
+.gradle/
+

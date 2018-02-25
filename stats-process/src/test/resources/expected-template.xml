@@ -1,0 +1,36 @@
+<template>
+  <questions>
+    <exercise>
+      <number>1</number>
+      <question>Semafory Dijkstry</question>
+      <answers class="java.util.Arrays$ArrayList">
+        <a class="answer-array">
+          <answer>
+            <text>Sluza do synchronizacji procesow wspolbieznych</text>
+            <correct>true</correct>
+          </answer>
+          <answer>
+            <text>Sa to flagi dwustanowe, na ktorych zdefiniowane sa nieprzerywalne operacje P i V</text>
+            <correct>false</correct>
+          </answer>
+        </a>
+      </answers>
+    </exercise>
+    <exercise>
+      <number>2</number>
+      <question>Algorytm przelaczania procesow w systemie Unix</question>
+      <answers class="java.util.Arrays$ArrayList">
+        <a class="answer-array">
+          <answer>
+            <text>Jest algorytmem z wywlaszczeniem procesow systemowych i uzytkowych</text>
+            <correct>false</correct>
+          </answer>
+          <answer>
+            <text>Jest algortmem priorytetowym, w którym priorytet jest wewnetrznie zmieniany w trakcie wykonywania procesu</text>
+            <correct>true</correct>
+          </answer>
+        </a>
+      </answers>
+    </exercise>
+  </questions>
+</template>
