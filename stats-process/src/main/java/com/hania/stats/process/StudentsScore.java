@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * Connects student's name with his score.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 class StudentsScore {
@@ -23,10 +25,20 @@ class StudentsScore {
      */
     private Integer score;
 
+    /**
+     * Constructor.
+     *
+     * @param student student's answers
+     */
     public StudentsScore(StudentsAnswers student) {
         this.student = student;
     }
 
+    /**
+     * {@link StudentsScore#student}
+     *
+     * @return student's answers
+     */
     public StudentsAnswers getStudent() {
         return student;
     }

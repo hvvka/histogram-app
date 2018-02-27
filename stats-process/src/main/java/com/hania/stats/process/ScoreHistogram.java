@@ -8,10 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Creates score histogram.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 class ScoreHistogram {
 
+    /**
+     * {@link Histograms#createScoreHistogram(List, Set)}
+     */
     List<Integer> createScoreHistogram(List<Question> questions, Set<StudentsScore> students) {
         int maxScore = questions.size();
         List<Integer> histogram = new ArrayList<>(Collections.nCopies(maxScore + 1, 0));

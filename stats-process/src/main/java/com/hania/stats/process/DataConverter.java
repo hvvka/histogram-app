@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * An interface that provides with methods for the GUI module.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 public interface DataConverter {
@@ -15,6 +17,7 @@ public interface DataConverter {
      *
      * @param templatePath  the location for the XML file with template containg test structure and correct answers
      * @param answersPath   the location for the CSV file containg all the students' answers
+     * @throws IOException  the exception results from the wrong inputs
      */
     void loadData(Path templatePath, Path answersPath) throws IOException;
 

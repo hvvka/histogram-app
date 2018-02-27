@@ -10,11 +10,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * Creates mark histogram.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 class MarkHistogram {
 
-    // todo zmienić na integera
+    /**
+     * {@link Histograms#createMarkHistogram(List, Set)}
+     */
     Map<String, Long> createMarkHistogram(List<Question> questions, Set<StudentsScore> students) {
         List<Integer> percentRange = Arrays.asList(50, 60, 70, 80, 90, 95, 100);
         int maxScore = questions.size();
@@ -24,10 +28,24 @@ class MarkHistogram {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
+    /**
+     * Returns exam's result in percent.
+     *
+     * @param maxScore maximum score for the exam
+     * @param sc score achieved by the student
+     * @return percentage score
+     */
     private int getPercent(int maxScore, Integer sc) {
         return sc * 100 / maxScore;
     }
 
+    /**
+     * Returns the mark achieved by the student.
+     *
+     * @param percent percentage score
+     * @param percentRange score's boundaries
+     * @return the mark
+     */
     private String getMark(int percent, List<Integer> percentRange) {
         switch(getMarkNumber(percent, percentRange)) {
             case 0: return "2";
@@ -41,6 +59,13 @@ class MarkHistogram {
         }
     }
 
+    /**
+     * Checks where the score belongs to (which range).
+     *
+     * @param percent percentage score
+     * @param percentRange score's boundaries
+     * @return the number (integer) from 0 to 6
+     */
     private int getMarkNumber(int percent, List<Integer> percentRange) {
         for (int i = 0; i < percentRange.size(); i++) {
             if (percent <= percentRange.get(i))

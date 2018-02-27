@@ -8,24 +8,62 @@ import com.hania.stats.process.DataConverter;
 import javax.swing.*;
 
 /**
+ * Controller of frame for generating statistics.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 class GenerateStatsFrameController {
 
+    /**
+     * The frame for choosing histograms
+     */
     private GenerateStatsFrame generateStatsFrame;
+    /**
+     * {@link MainFrameController#mainFrame}
+     */
     private MainFrame mainFrame;
+    /**
+     * The controller for HistogramFrame
+     */
     private HistogramFrameController histogramFrameController;
+    /**
+     * @see DataConverter
+     */
     private DataConverter converter;
 
+    /**
+     * {@link GenerateStatsFrame#scoreHistogramButton}
+     */
     private JButton scoreHistogramButton;
+    /**
+     * {@link GenerateStatsFrame#questionHistogramButton}
+     */
     private JButton questionHistogramButton;
+    /**
+     * {@link GenerateStatsFrame#markHistogramButton}
+     */
     private JButton markHistogramButton;
+    /**
+     * {@link GenerateStatsFrame#returnButton}
+     */
     private JButton returnButton;
 
-    private HistogramFrame scoreHisogramFrame;
-    private HistogramFrame markHisogramFrame;
-    private HistogramFrame questionHisogramFrame;
+    /**
+     * Frame for the score histogram.
+     */
+    private HistogramFrame scoreHistogramFrame;
+    /**
+     * Frame for the mark histogram.
+     */
+    private HistogramFrame markHistogramFrame;
+    /**
+     * Frame for the question histogram.
+     */
+    private HistogramFrame questionHistogramFrame;
 
+    /**
+     * Default constructor.
+     */
     GenerateStatsFrameController(DataConverter converter, MainFrame mainFrame) {
         this.converter = converter;
         this.mainFrame = mainFrame;
@@ -34,31 +72,37 @@ class GenerateStatsFrameController {
         initListeners();
     }
 
+    /**
+     * Initializes actions listeners.
+     */
     private void initListeners() {
         scoreHistogramButton.addActionListener(ae -> {
             histogramFrameController = new HistogramFrameController();
-            scoreHisogramFrame = histogramFrameController.setScoreHistogramData(converter.createScoreHistogram());
+            scoreHistogramFrame = histogramFrameController.setScoreHistogramData(converter.createScoreHistogram());
         });
 
         questionHistogramButton.addActionListener(ae -> {
             histogramFrameController = new HistogramFrameController();
-            markHisogramFrame = histogramFrameController.setQuestionHistogramData(converter.createQuestionHistogram());
+            markHistogramFrame = histogramFrameController.setQuestionHistogramData(converter.createQuestionHistogram());
         });
 
         markHistogramButton.addActionListener(ae -> {
             histogramFrameController = new HistogramFrameController();
-            questionHisogramFrame = histogramFrameController.setMarkHistogramData(converter.createMarkHistogram());
+            questionHistogramFrame = histogramFrameController.setMarkHistogramData(converter.createMarkHistogram());
         });
 
         returnButton.addActionListener(ae -> {
             mainFrame.setVisible(true);
-            scoreHisogramFrame.dispose();
-            markHisogramFrame.dispose();
-            questionHisogramFrame.dispose();
+            scoreHistogramFrame.dispose();
+            markHistogramFrame.dispose();
+            questionHistogramFrame.dispose();
             generateStatsFrame.dispose();
         });
     }
 
+    /**
+     * Initializes frame's componenets.
+     */
     private void initComponents() {
         generateStatsFrame = new GenerateStatsFrame();
         generateStatsFrame.setVisible(true);

@@ -16,10 +16,15 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 /**
+ * An util for reading CSV file with students' answers.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 final class StudentsAnswersProvider {
 
+    /**
+     * Default constructor.
+     */
     private StudentsAnswersProvider() {
         // util
     }
@@ -48,12 +53,26 @@ final class StudentsAnswersProvider {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Returns all the student's answers from CSV file.
+     *
+     * @param csvRecordIterator iterator for the csv record
+     * @param template exam's template
+     * @return student's answers
+     */
     private static StudentsAnswers getStudent(Iterator<CSVRecord> csvRecordIterator, Template template) {
         String name = csvRecordIterator.next().get(0);
         Map<Integer, List<Boolean>> answers = getAnswers(csvRecordIterator, template);
         return new StudentsAnswers(name, answers);
     }
 
+    /**
+     * Returns the map. Key is the question's number. Value is the list of booleans (student's answers).
+     *
+     * @param csvRecordIterator iterator for the csv record
+     * @param template exam's template
+     * @return the map of question's number and the list of booleans
+     */
     private static Map<Integer, List<Boolean>> getAnswers(Iterator<CSVRecord> csvRecordIterator, Template template) {
         return IntStream.range(0, template.getQuestions().size())
                 .boxed()
@@ -61,6 +80,12 @@ final class StudentsAnswersProvider {
                 .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
     }
 
+    /**
+     * Returns student's answers.
+     *
+     * @param csvRecordIterator exam's template
+     * @return the list of booleans
+     */
     private static List<Boolean> getQuestionAnswers(Iterator<CSVRecord> csvRecordIterator) {
         return StreamSupport.stream(csvRecordIterator.next().spliterator(), false)
                 .map(Boolean::valueOf)

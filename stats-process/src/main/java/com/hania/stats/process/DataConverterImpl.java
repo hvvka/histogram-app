@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Implementation of data converter.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 public class DataConverterImpl implements DataConverter {
@@ -72,11 +74,19 @@ public class DataConverterImpl implements DataConverter {
         return histograms.createQuestionHistogram(template.getQuestions(), getStudentsAnswers());
     }
 
-    // todo up
+    /**
+     * {@link Template}
+     * @return the template read from a file
+     */
     Template getTemplate() {
         return template;
     }
 
+    /**
+     * Maps StudentsScore to StudentsAnswers and returns as the set of objects.
+     *
+     * @return the set of StudentsAnswers
+     */
     Set<StudentsAnswers> getStudentsAnswers() {
         return students.stream()
                 .map(StudentsScore::getStudent)

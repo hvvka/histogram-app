@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * Student's answer model.
+ *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 public class StudentsAnswers {
@@ -19,15 +21,32 @@ public class StudentsAnswers {
      */
     private final Map<Integer, List<Boolean>> answers;
 
+    /**
+     * Constructor.
+     *
+     * @param name student's full name
+     * @param answers student's answers for the exam
+     */
     public StudentsAnswers(String name, Map<Integer, List<Boolean>> answers) {
         this.name = name;
         this.answers = answers;
     }
 
+    /**
+     * {@link StudentsAnswers#name}
+     *
+     * @return student's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the map. Key stands for question's number (id) and the value is the list of booleans (they stand for
+     * student's answers for the question).
+     *
+     * @return answers for the exam
+     */
     public Map<Integer, List<Boolean>> getAnswers() {
         return answers;
     }
