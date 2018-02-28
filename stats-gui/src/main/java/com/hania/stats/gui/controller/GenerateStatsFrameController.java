@@ -8,7 +8,7 @@ import com.hania.stats.process.DataConverter;
 import javax.swing.*;
 
 /**
- * Controller of frame for generating statistics.
+ * Controller of the frame for generating statistics.
  *
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */

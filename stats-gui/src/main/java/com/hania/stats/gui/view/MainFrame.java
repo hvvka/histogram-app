@@ -1,6 +1,7 @@
 package com.hania.stats.gui.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
@@ -42,6 +43,7 @@ public class MainFrame extends JFrame {
         setContentPane(mainPanel);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("resources/bird.png"));
     }
 
     /**
