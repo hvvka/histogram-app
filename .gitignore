@@ -16,5 +16,3 @@ out/
 build/
 .gradle/
 
-#GUI forms
-*.form
